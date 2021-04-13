@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ysmCloud Login</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="team" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="css/tooplate-style.css">
+    <meta name="google-signin-client_id" content="655239279837-jtjmhda58ut12qf834tq14l4cf95c7p3.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+</head>
+<body>
+
+<section class="navbar custom-navbar navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+            </button>
+
+            <!-- lOGO TEXT HERE -->
+            <a href="index.html" class="navbar-brand">ysmCloud</a>
+        </div>
+
+        <!-- MENU LINKS -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#home" class="smoothScroll">Home</a></li>
+                <li><a href="#load" class="smoothScroll"> Upload </a></li>
+                <li><a href="#feature" class="smoothScroll">Features</a></li>
+                <li><a href="#about" class="smoothScroll">About us</a></li>
+                <li><a href="#pricing" class="smoothScroll">Pricing</a></li>
+                <li><a href="#contact" class="smoothScroll">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" onclick="signOut()">Sign Out!!</span></a></li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+<!-- FEATURE -->
+<section id="home" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+
+        <div class="col-md-offset-3 col-md-6 col-sm-12">
+            <h1>SIGN IN</h1>
+            <h2>Sign in with your google account :)</h2>
+        </div>
+
+    </div>
+</section>
+
+<h1> Sign in</h1>
+<div class="g-signin2" data-onsuccess="onSignIn()"></div>
+<button onclick="signOut()">Sign Out</button>
+</body>
+    <script>
+        function onSignIn(googleUser) {
+            // Useful data for your client-side scripts:
+            var profile = googleUser.getBasicProfile();
+            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+            console.log('Full Name: ' + profile.getName());
+            console.log('Given Name: ' + profile.getGivenName());
+            console.log('Family Name: ' + profile.getFamilyName());
+            console.log("Image URL: " + profile.getImageUrl());
+            console.log("Email: " + profile.getEmail());
+
+            // The ID token you need to pass to your backend:
+            var id_token = googleUser.getAuthResponse().id_token;
+            console.log("ID Token: " + id_token);
+        }
+        function signOut() {
+            gapi.auth2.getAuthInstance().signOut().then ( function() {
+                console.log('user signed out')
+                }
+            )
+        }
+
+        function onSuccess(googleUser) {
+            console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+            window.location.href= index.html
+        }
+        function onFailure(error) {
+            console.log(error);
+        }
+        function renderButton() {
+            gapi.signin2.render('my-signin2', {
+                'scope': 'profile email',
+                'width': 240,
+                'height': 50,
+                'longtitle': true,
+                'theme': 'dark',
+                'onsuccess': onSuccess,
+                'onfailure': onFailure
+            });
+        }
+    </script>
+<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+
+</html>
