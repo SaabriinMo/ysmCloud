@@ -108,32 +108,40 @@
 <!--    </div>-->
 <!--</section>-->
 
-<button onclick="uploadObject()">Upload</button>
+<button  onclick="myFunction()">Upload.</button>
 
 <script>
-    function uploadObject(){
-        // The ID of your GCP project
-        const projectId = "red-road-309816";
+    function myFunction() {
 
-        // The ID of your GCS bucket
-        const bucketName = "media.ysmcloud.net";
+// The ID of your GCS bucket
+ const bucketName = 'media.ysmcloud.net';
 
-        // The ID of your GCS object
-        const objectName = "test";
+// The path to your file to upload
+ const filePath = 'C:\\Users\\yasin\\Downloads\\test.txt';
 
-        // The path to your file to upload
-        const filePath = "C:\\Users\\yasin\\Downloads\\test.txt";
+// The new ID for your GCS file
+ const destFileName = 'test';
 
-        Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
-        BlobId blobId = BlobId.of(bucketName, objectName);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
-        storage.create(blobInfo, Files.readAllBytes(Paths.get(filePath)));
+// Imports the Google Cloud client library
+        const {Storage} = require('@google-cloud/storage');
 
-        // System.out.println(
-        //     "File " + filePath + " uploaded to bucket " + bucketName + " as " + objectName);
+// Creates a client
+        const storage = new Storage();
+
+        async function uploadFile() {
+            await storage.bucket(bucketName).upload(filePath, {
+                destination: destFileName,
+            });
+
+            console.log(`${filePath} uploaded to ${bucketName}`);
+        }
+
+        uploadFile().catch(console.error);
     }
-
 </script>
+
+
+
 
 <!-- FOOTER -->
 <footer id="footer" data-stellar-background-ratio="0.5">
