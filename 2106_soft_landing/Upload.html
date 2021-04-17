@@ -124,20 +124,26 @@
  const destFileName = 'test';
 
 // Imports the Google Cloud client library
-        const {Storage} = require('@google-cloud/storage');
+       // const {Storage} = require('@google-cloud/storage');
 
-// Creates a client
-        const storage = new Storage();
+        define(['require'], function (require) {
 
-        async function uploadFile() {
-            await storage.bucket(bucketName).upload(filePath, {
-                destination: destFileName,
-            });
+            const {Storage} = require('@google-cloud/storage');
 
-            console.log(`${filePath} uploaded to ${bucketName}`);
-        }
+            // Creates a client
+            const storage = new Storage();
 
-        uploadFile().catch(console.error);
+            async function uploadFile() {
+                await storage.bucket(bucketName).upload(filePath, {
+                    destination: destFileName,
+                });
+
+                console.log(`${filePath} uploaded to ${bucketName}`);
+            }
+
+            uploadFile().catch(console.error);        });
+
+
     }
 </script>
 
